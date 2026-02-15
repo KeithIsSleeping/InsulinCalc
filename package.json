@@ -1,0 +1,16 @@
+{
+  "name": "insulincalc",
+  "version": "1.0.0",
+  "description": "An insulin dosing calculator with Dexcom CGM trend arrow integration, day/night presets, and full calculation explanations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}

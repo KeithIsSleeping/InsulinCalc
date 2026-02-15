@@ -1,0 +1,42 @@
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+build/
+
+# Gradle files
+.gradle/
+local.properties
+
+# Android Studio
+*.iml
+.idea/
+.DS_Store
+captures/
+
+# Signing & secrets
+*.jks
+*.keystore
+*.pem
+keystore.properties
+
+# Node / Playwright
+node_modules/
+test-results/
+playwright-report/
+
+# Store assets (screenshots are large, regenerate with: npx playwright test tests/screenshots.spec.js)
+# Uncomment below if you don't want screenshots in the repo:
+# store-assets/

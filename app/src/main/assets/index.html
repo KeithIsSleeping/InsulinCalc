@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Insulin Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ====== Profile Bar ====== -->
+<div class="profile-bar">
+    <div class="profile-tabs" id="profileTabs">
+        <!-- dynamically generated -->
+    </div>
+    <button class="profile-add-btn" onclick="addProfile()" aria-label="Add profile">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+    <button class="settings-btn" onclick="openSettings()" aria-label="Settings">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+    </button>
+</div>
+
+<!-- ====== Input Card ====== -->
+<div class="card">
+    <!-- Carbs To Eat -->
+    <div class="input-row">
+        <label class="input-label" for="carbsToEat">Carbs To Eat</label>
+        <div class="input-right">
+            <button class="info-btn" onclick="showInfo('carbsToEat')" aria-label="Info">?</button>
+            <div class="icon-spacer"></div>
+            <input type="number" id="carbsToEat" class="input-field" inputmode="decimal" step="any" autocomplete="off">
+            <span class="unit">g</span>
+        </div>
+    </div>
+
+    <!-- Current Glucose + CGM Trend toggle -->
+    <div class="input-row">
+        <label class="input-label" for="currentGlucose">Glucose</label>
+        <div class="input-right">
+            <button class="info-btn" onclick="showInfo('currentGlucose')" aria-label="Info">?</button>
+            <button class="trend-toggle" id="trendToggle" onclick="toggleTrendPanel()" aria-label="CGM Trend">
+                <svg class="trend-toggle-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span id="trendBadge" class="trend-badge-inline"></span>
+            </button>
+            <input type="number" id="currentGlucose" class="input-field" inputmode="decimal" step="any" autocomplete="off">
+            <span class="unit glucose-unit">mg/dL</span>
+        </div>
+    </div>
+
+    <!-- Collapsible Trend Strip -->
+    <div class="trend-panel" id="trendPanel">
+        <div class="trend-strip" id="trendStrip">
+            <!-- dynamically generated based on units -->
+        </div>
+    </div>
+
+    <!-- Carb Ratio -->
+    <div class="input-row">
+        <label class="input-label" for="carbRatio">Carb Ratio</label>
+        <div class="input-right">
+            <button class="info-btn" onclick="showInfo('carbRatio')" aria-label="Info">?</button>
+            <button class="icon-btn" onclick="unlockField('carbRatio')" aria-label="Edit carb ratio">
+                <img src="img/edit.png" alt="Edit">
+            </button>
+            <input type="number" id="carbRatio" class="input-field" inputmode="decimal" step="any" autocomplete="off">
+            <span class="unit">g</span>
+        </div>
+    </div>
+
+    <!-- Correction Factor -->
+    <div class="input-row">
+        <label class="input-label" for="correctionFactor">Correction Factor</label>
+        <div class="input-right">
+            <button class="info-btn" onclick="showInfo('correctionFactor')" aria-label="Info">?</button>
+            <button class="icon-btn" onclick="unlockField('correctionFactor')" aria-label="Edit correction factor">
+                <img src="img/edit.png" alt="Edit">
+            </button>
+            <input type="number" id="correctionFactor" class="input-field" inputmode="decimal" step="any" autocomplete="off">
+            <span class="unit glucose-unit">mg/dL</span>
+        </div>
+    </div>
+
+    <!-- Target -->
+    <div class="input-row">
+        <label class="input-label" for="target">Target</label>
+        <div class="input-right">
+            <button class="info-btn" onclick="showInfo('target')" aria-label="Info">?</button>
+            <button class="icon-btn" onclick="unlockField('target')" aria-label="Edit target">
+                <img src="img/edit.png" alt="Edit">
+            </button>
+            <input type="number" id="target" class="input-field" inputmode="decimal" step="any" autocomplete="off">
+            <span class="unit glucose-unit">mg/dL</span>
+        </div>
+    </div>
+
+    <!-- Calculate -->
+    <div class="calc-btn-wrap">
+        <button class="calc-btn" onclick="calculate()">Calculate</button>
+    </div>
+</div>
+
+<!-- ====== Results Card ====== -->
+<div class="card results">
+    <div id="resultCarb" class="result-item"><strong>Carb Dose</strong></div>
+    <div id="resultCorrection" class="result-item"><strong>Correction Dose</strong></div>
+    <div id="resultTotal" class="result-item"><strong>Total Dose</strong></div>
+</div>
+
+<!-- ====== Terms Overlay ====== -->
+<div id="termsOverlay" class="terms-overlay">
+    <div class="terms-title">Insulin Calc</div>
+    <div class="terms-body">
+        This app helps you make insulin dosing calculations. You are
+        <b>strongly</b> encouraged to confirm any information with your
+        professional healthcare provider and to review all information
+        regarding any medical treatment.<br><br>
+        This app is not associated with Dexcom or any other medical provider.
+        For medical emergencies call <b>911</b> immediately.
+    </div>
+    <button class="terms-accept" onclick="acceptTerms()">Accept</button>
+</div>
+
+<!-- ====== Settings Overlay ====== -->
+<div id="settingsOverlay" class="settings-overlay">
+    <div class="settings-header">
+        <button class="settings-back" onclick="closeSettings()">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+        </button>
+        <div class="settings-title">Settings</div>
+    </div>
+    <div class="settings-content">
+        <!-- Theme -->
+        <div class="settings-section">
+            <div class="settings-section-title">Theme</div>
+            <div class="settings-toggle-group" id="themeOptions">
+                <button class="settings-toggle active" data-value="system" onclick="setTheme('system')">Auto</button>
+                <button class="settings-toggle" data-value="light" onclick="setTheme('light')">Light</button>
+                <button class="settings-toggle" data-value="dark" onclick="setTheme('dark')">Dark</button>
+            </div>
+        </div>
+        <!-- Units -->
+        <div class="settings-section">
+            <div class="settings-section-title">Glucose Units</div>
+            <div class="settings-toggle-group" id="unitOptions">
+                <button class="settings-toggle active" data-value="mgdl" onclick="setUnits('mgdl')">mg/dL</button>
+                <button class="settings-toggle" data-value="mmol" onclick="setUnits('mmol')">mmol/L</button>
+            </div>
+        </div>
+        <!-- Rounding -->
+        <div class="settings-section">
+            <div class="settings-section-title">Dose Rounding</div>
+            <div class="settings-toggle-group" id="roundingOptions">
+                <button class="settings-toggle" data-value="1" onclick="setRounding(1)">1u</button>
+                <button class="settings-toggle active" data-value="0.5" onclick="setRounding(0.5)">0.5u</button>
+                <button class="settings-toggle" data-value="0.1" onclick="setRounding(0.1)">0.1u</button>
+                <button class="settings-toggle" data-value="0.05" onclick="setRounding(0.05)">0.05u</button>
+            </div>
+        </div>
+        <!-- Profiles -->
+        <div class="settings-section">
+            <div class="settings-section-title">Profiles</div>
+            <div id="profileList" class="profile-list">
+                <!-- dynamically generated -->
+            </div>
+            <button class="profile-add-full" onclick="addProfile()">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add Profile
+            </button>
+        </div>
+        <!-- 24h Timeline -->
+        <div class="settings-section">
+            <div class="settings-section-title">24-Hour Schedule</div>
+            <div class="timeline-container" id="timelineContainer">
+                <!-- dynamically generated -->
+            </div>
+        </div>
+        <!-- Version / Easter Egg -->
+        <div class="settings-version" id="settingsVersion" onclick="easterEggTap()">
+            v2.0.0
+        </div>
+        <div class="easter-egg" id="easterEgg">
+            <svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M54,72 L36.4,55.6 C32.2,51.4 30,46.4 30,41.5 C30,34.1 36.1,28 43.5,28 C47.5,28 51.2,29.8 54,33 C56.8,29.8 60.5,28 64.5,28 C71.9,28 78,34.1 78,41.5 C78,46.4 75.8,51.4 71.6,55.6 Z"/>
+            </svg>
+            <span>For Bradley</span>
+        </div>
+    </div>
+</div>
+<div id="profileEditor" class="profile-editor-overlay" onclick="closeProfileEditor()">
+    <div class="profile-editor" onclick="event.stopPropagation()">
+        <div class="profile-editor-title" id="profileEditorTitle">Edit Profile</div>
+        <div class="profile-editor-field">
+            <label>Name</label>
+            <input type="text" id="profileEditorName" maxlength="20" autocomplete="off">
+        </div>
+        <div class="profile-editor-field">
+            <label>Active From</label>
+            <input type="time" id="profileEditorStart">
+        </div>
+        <div class="profile-editor-field">
+            <label>Active Until</label>
+            <input type="time" id="profileEditorEnd">
+        </div>
+        <div class="profile-editor-hint">Leave times empty to select this profile manually.</div>
+        <div class="profile-editor-divider"></div>
+        <div class="profile-editor-field">
+            <label>Carb Ratio</label>
+            <div class="profile-editor-input-row">
+                <input type="number" id="profileEditorCarbRatio" inputmode="decimal" step="any" autocomplete="off">
+                <span class="profile-editor-unit">g</span>
+            </div>
+        </div>
+        <div class="profile-editor-field">
+            <label>Correction Factor</label>
+            <div class="profile-editor-input-row">
+                <input type="number" id="profileEditorCF" inputmode="decimal" step="any" autocomplete="off">
+                <span class="profile-editor-unit glucose-unit">mg/dL</span>
+            </div>
+        </div>
+        <div class="profile-editor-field">
+            <label>Target</label>
+            <div class="profile-editor-input-row">
+                <input type="number" id="profileEditorTarget" inputmode="decimal" step="any" autocomplete="off">
+                <span class="profile-editor-unit glucose-unit">mg/dL</span>
+            </div>
+        </div>
+        <div class="profile-editor-hint">Leave empty to enter values on the calculator page.</div>
+        <div class="profile-editor-actions">
+            <button class="profile-editor-cancel" onclick="closeProfileEditor()">Cancel</button>
+            <button class="profile-editor-save" onclick="saveProfileEditor()">Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+
+<!-- ====== Info Popup ====== -->
+<div id="infoOverlay" class="info-overlay" onclick="closeInfo()">
+    <div class="info-popup" onclick="event.stopPropagation()">
+        <div id="infoTitle" class="info-popup-title"></div>
+        <div id="infoBody" class="info-popup-body"></div>
+        <button class="info-popup-close" onclick="closeInfo()">Got it</button>
+    </div>
+</div>
+
+</body>
+</html>
