@@ -13,6 +13,8 @@ A fast, private insulin dose calculator for Android — built by a parent of a c
   <img src="store-assets/screenshots/02-calculator-light.png" width="180" alt="Calculator (Light)">
   <img src="store-assets/screenshots/03-cgm-trends.png" width="180" alt="CGM Trends">
   <img src="store-assets/screenshots/04-settings.png" width="180" alt="Settings">
+  <img src="store-assets/screenshots/05-profile-editor.png" width="180" alt="Profile Editor">
+  <img src="store-assets/screenshots/06-profiles-results.png" width="180" alt="Profiles with Results">
 </p>
 
 ## Features
