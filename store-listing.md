@@ -19,6 +19,9 @@ Enter the carbs you plan to eat and your insulin-to-carb ratio. The app instantl
 ▸ Correction Dose Calculation
 Enter your current glucose reading, correction factor, and target. The app calculates the correction dose needed to bring your glucose back to target.
 
+▸ Transparent Math
+Every calculation shows the full formula and breakdown so you can see exactly how your dose was calculated. No black boxes — just clear, verifiable math.
+
 ▸ Dexcom CGM Trend Support
 Select your current CGM trend arrow (from ↑↑ rapidly rising to ↓↓ rapidly falling) to factor glucose trends into your dose calculation. Supports both mg/dL and mmol/L adjustments.
 
