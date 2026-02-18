@@ -9,12 +9,13 @@ A fast, private insulin dose calculator for Android — built by a parent of a c
 ## Screenshots
 
 <p align="center">
-  <img src="store-assets/screenshots/01-calculator-dark.png" width="180" alt="Calculator (Dark)">
-  <img src="store-assets/screenshots/02-calculator-light.png" width="180" alt="Calculator (Light)">
-  <img src="store-assets/screenshots/03-cgm-trends.png" width="180" alt="CGM Trends">
-  <img src="store-assets/screenshots/04-settings.png" width="180" alt="Settings">
-  <img src="store-assets/screenshots/05-profile-editor.png" width="180" alt="Profile Editor">
-  <img src="store-assets/screenshots/06-profiles-results.png" width="180" alt="Profiles with Results">
+  <img src="store-assets/screenshots/01-calculator-empty.png" width="160" alt="Calculator (Empty)">
+  <img src="store-assets/screenshots/02-calculation-day.png" width="160" alt="Day Calculation">
+  <img src="store-assets/screenshots/03-calculation-night.png" width="160" alt="Night Calculation">
+  <img src="store-assets/screenshots/04-profile-editor.png" width="160" alt="Profile Editor">
+  <img src="store-assets/screenshots/05-profile-loaded.png" width="160" alt="Breakfast Profile">
+  <img src="store-assets/screenshots/06-settings-dark.png" width="160" alt="Settings (Dark)">
+  <img src="store-assets/screenshots/07-settings-light.png" width="160" alt="Settings (Light)">
 </p>
 
 ## Features
