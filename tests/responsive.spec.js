@@ -127,7 +127,7 @@ test('calculation produces results', async ({ page }) => {
     await page.locator('.calc-btn').click();
 
     const resultTotal = page.locator('#resultTotal');
-    await expect(resultTotal).toContainText('Total Dose');
+    await expect(resultTotal).toHaveClass(/visible/);
     await expect(resultTotal).toContainText('u'); // dose unit
 });
 

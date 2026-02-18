@@ -20,7 +20,7 @@ android {
         applicationId = "com.TeraFlop.InsulinCalc"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
+        versionCode = 6
         versionName = "2.0.0"
     }
 

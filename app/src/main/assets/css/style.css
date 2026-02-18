@@ -501,11 +501,41 @@ body {
     box-shadow: 0 2px 8px var(--calc-btn-shadow);
 }
 
-/* ---------- Results ---------- */
+/* ---------- Total Dose (inline below button) ---------- */
+.result-total-inline {
+    display: none;
+    text-align: center;
+    padding: 12px 14px 4px;
+    font-size: .9rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+}
+
+.result-total-inline.visible {
+    display: block;
+}
+
+.result-total-inline .result-highlight {
+    font-size: 1.5rem;
+    padding: 6px 20px;
+    margin: 6px 0;
+}
+
+.result-total-inline .result-math {
+    font-size: .8rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+}
+
+/* ---------- Results (breakdown) ---------- */
 .results {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 10px;
+}
+
+.results.visible {
+    display: flex;
 }
 
 .result-item {

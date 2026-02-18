@@ -812,13 +812,13 @@ function calculate() {
     const decimals = step < 0.1 ? 2 : 1;
     const finalDose = rounded.toFixed(decimals);
 
-    let totalHTML = "<strong>Total Dose</strong><br>" +
-        "Carb (" + carbDose3 + ") + Correction (" + correctionDose3 + ") = " + rawTotal3 + "<br>";
+    let totalHTML = "";
+    let mathHTML = '<div class="result-math">Carb (' + carbDose3 + ') + Correction (' + correctionDose3 + ') = ' + rawTotal3 + '</div>';
 
     if (rounded < 0) {
         const carbDeficit = Math.abs(Math.round(carbRatio * rawTotal));
         totalHTML += '<span class="result-highlight" style="background:var(--red-bg);color:var(--red);">0.0u \u2014 ' +
-            carbDeficit + "g carb deficit</span>";
+            carbDeficit + "g carb deficit</span>" + mathHTML;
 
         if (glucoseMg < 56) {
             totalHTML += '<br><span class="result-danger">\u26A0 Below ' + mgToDisplay(55) + " " + unit +
@@ -828,7 +828,7 @@ function calculate() {
                 " \u2014 take 15g fast-acting carbs, recheck in 15 min.</span>";
         }
     } else {
-        totalHTML += 'Rounded down \u2192 <span class="result-highlight">' + finalDose + "u</span>";
+        totalHTML += '<span class="result-highlight">' + finalDose + "u</span>" + mathHTML;
         if (glucoseMg > 249) {
             totalHTML += '<br><span class="result-warning">\u26A0 Above ' + mgToDisplay(250) + " " + unit +
                 " \u2014 consider checking ketone levels.</span>";
@@ -836,6 +836,8 @@ function calculate() {
     }
 
     $("resultTotal").innerHTML = totalHTML;
+    $("resultTotal").classList.add("visible");
+    $("resultsCard").classList.add("visible");
 
     // Lock fields with display values
     setFieldReadonly("carbRatio", carbRatio, true);
@@ -854,7 +856,9 @@ function calculate() {
 function clearResults() {
     $("resultCarb").innerHTML = "<strong>Carb Dose</strong>";
     $("resultCorrection").innerHTML = "<strong>Correction Dose</strong>";
-    $("resultTotal").innerHTML = "<strong>Total Dose</strong>";
+    $("resultTotal").innerHTML = "";
+    $("resultTotal").classList.remove("visible");
+    $("resultsCard").classList.remove("visible");
 }
 
 // ---- Unlock (edit) field ----
